@@ -3,21 +3,17 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <title>Document</title>
 </head>
+
 <body>
     <?php
 
@@ -26,40 +22,53 @@
     $query = "SELECT * FROM `books`";
     $result = $db->conn->query($query);
 
-    while($row = $result->fetch_assoc()){
+    while ($row = $result->fetch_assoc()) {
         $books[] = new Book($row['id'], $row['title'], $row['genre'], $row['author_id']);
     }
     $db->conn->close();
-   
-    foreach ($books as $book) {
-        // Access the properties of the current Book object using the arrow operator
-        echo "Book ID: " . $book->id . "<br>";
-        echo "Title: " . $book->title . "<br>";
-        echo "Genre: " . $book->genre . "<br>";
-        echo "Author ID: " . $book->authorId . "<br>";
-        echo "<br>";
-    }
 
-
-
-    // echo '<table class="table">';
-    // echo "<tr><th>ID</th><th>Title</th><th>Genre</th><th>Author ID</th></tr>";
-    
-    // // Loop through each Book object in the array
     // foreach ($books as $book) {
-    //     // Output a row for the current Book object
-    //     echo "<tr>";
-    //     echo "<td>" . $book->id . "</td>";
-    //     echo "<td>" . $book->title . "</td>";
-    //     echo "<td>" . $book->genre . "</td>";
-    //     echo "<td>" . $book->authorId . "</td>";
-    //     echo "</tr>";
+    //     echo "Book ID: " . $book->id . "<br>";
+    //     echo "Title: " . $book->title . "<br>";
+    //     echo "Genre: " . $book->genre . "<br>";
+    //     echo "Author ID: " . $book->authorId . "<br>";
+    //     echo "<br>";
     // }
-    
-    // // Close the table
-    // echo "</table>";
 
 
-?>
+    ?>
+  <!-- <div class="container"> -->
+    <h1>Biblioteka</h1>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Author ID</th>
+                    <th>show</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+                <?php foreach ($books as $book) { ?>
+                    <tr>
+                        <td> <?= $book->id ?></td>
+                        <td> <?= $book->title ?></td>
+                        <td> <?= $book->genre ?></td>
+                        <td> <?= $book->authorId ?></td>
+                        <td><button class="btn btn-primary">show</button></td>
+                        <td><button class="btn btn-success">edit</button></td>
+                        <td><button class="btn btn-danger">delete</button></td>
+                    </tr>
+                <?php  } ?>
+            </table>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+  
+<!-- </div> -->
 </body>
+
 </html>
