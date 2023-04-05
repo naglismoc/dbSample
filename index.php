@@ -1,44 +1,31 @@
-<?php include "./DB.php" ?>
-<?php include "./Book.php" ?>
+<?php
+// header('X-Redirected-By: PHP');
+// header("Location: ./kitas.php");
+// die;
+?>
 
+<?php
+include "./routes.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
-
-    <title>Document</title>
+    <?php include "./views/components/head.php" ?>
 </head>
 
 <body>
-    <?php
+    <?php include "./views/components/navbar.php" ?>
 
-    $books = [];
-    $db = new DB();
-    $query = "SELECT * FROM `books`";
-    $result = $db->conn->query($query);
-
-    while ($row = $result->fetch_assoc()) {
-        $books[] = new Book($row['id'], $row['title'], $row['genre'], $row['author_id']);
-    }
-    $db->conn->close();
-
-    // foreach ($books as $book) {
-    //     echo "Book ID: " . $book->id . "<br>";
-    //     echo "Title: " . $book->title . "<br>";
-    //     echo "Genre: " . $book->genre . "<br>";
-    //     echo "Author ID: " . $book->authorId . "<br>";
-    //     echo "<br>";
-    // }
-
-
-    ?>
-  <!-- <div class="container"> -->
+    <!-- <div class="container"> -->
     <h1>Biblioteka</h1>
+    <form action="" method="post">
+        <input type="text" name="title">
+        <input type="text" name="genre">
+        <input type="text" name="author_id">
+        <button type="submit" name="save">do it!</button>
+    </form>
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
@@ -60,15 +47,22 @@
                         <td> <?= $book->authorId ?></td>
                         <td><button class="btn btn-primary">show</button></td>
                         <td><button class="btn btn-success">edit</button></td>
-                        <td><button class="btn btn-danger">delete</button></td>
+                        <td>
+                            <form action="" method="post">
+                                <button class="btn btn-danger" name="destroy">delete</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php  } ?>
             </table>
         </div>
         <div class="col-sm-3"></div>
     </div>
-  
-<!-- </div> -->
+
+    <!-- </div> -->
+
+    <small style> šis tekstas bus matomas </small>
+
 </body>
 
 </html>
