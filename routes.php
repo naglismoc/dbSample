@@ -12,10 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     //Arba atnaujinsim knygą
+    if (isset($_POST['update'])) {
+        BookController::update();
+        header("Location: ./index.php");
+        die;
+    }
 
     //arba ištrinsim knygą
     if (isset($_POST['destroy'])) {
-        echo "Destroy";
+       BookController::destroy();
+       header("Location: ./index.php");
+       die;
     }
 }
 
@@ -23,6 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
+    if(isset($_GET['edit'])){
+        $book = BookController::show();
+    }
 
     // atvaizduosim knygą
 

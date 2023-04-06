@@ -12,7 +12,8 @@ class BookController{
 
     public static function show()
     {
-        
+        $book = Book::find($_GET['id']);
+        return $book;
     }
 
     public static function store()
@@ -22,12 +23,14 @@ class BookController{
 
     public static function update()
     {
-    
+        $book = new Book($_POST['id'], $_POST['title'], $_POST['genre'], $_POST['author_id']);
+        $book->update();
+
     }
 
     public static function destroy()
     {
-      
+      Book::destroy($_POST['id']);
     }
 
 }
