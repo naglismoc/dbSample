@@ -1,11 +1,11 @@
 <?php
 include "./models/DB.php";
+include "./UnifyData.php";
 class Book
 {
     public $id;
     public $title;
     public $genre;
-    public $authorId;
     public $author;
 
     public function __construct($id = null, $title = "", $genre = "", $authorId = null, $name = "", $surname = "")
@@ -13,7 +13,6 @@ class Book
         $this->id = $id;
         $this->title = $title;
         $this->genre = $genre;
-        $this->authorId = $authorId;
         $this->author = new Author($authorId, $name, $surname);
     }
 
@@ -89,11 +88,12 @@ class Book
     }
 
 
-    public static function create()
+    public function create()
     {
+        $book = unifyData::unifyBook($this);
         $db = new DB();
         $stmt = $db->conn->prepare("INSERT INTO `books`(`title`, `genre`, `author_id`) VALUES (?,?,?)");
-        $stmt->bind_param("ssi", $_POST['title'], $_POST['genre'], $_POST['authorId']);
+        $stmt->bind_param("ssi", $book->title, $book->genre, $book->author->id);
         $stmt->execute();
         $stmt->close();
         $db->conn->close();
@@ -101,9 +101,11 @@ class Book
 
     public function update()
     {
+        // var_dump(date("Y-m-d H:i:s",time()));die;
+        $book = unifyData::unifyBook($this);
         $db = new DB();
-        $stmt = $db->conn->prepare("UPDATE `books` SET `title`= ?,`genre`=?,`author_id`=? WHERE `id` = ?");
-        $stmt->bind_param("ssii", $this->title, $this->genre, $this->authorId, $this->id);
+        $stmt = $db->conn->prepare("UPDATE `books` SET `title`= ?,`genre`=?,`author_id`=?, `updated_at`=? WHERE `id` = ?");
+        $stmt->bind_param("ssisi", $book->title, $book->genre, $book->author->id, date("Y-m-d H:i:s",time()), $book->id);
         $stmt->execute();
         $stmt->close();
         $db->conn->close();

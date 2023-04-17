@@ -25,15 +25,16 @@ class BookController{
 
     public static function store()
     {
-        if ( Validate::book()   ) {
+        if (Validate::book()) {
             $_SESSION['success'] = "Jūs sėkmingai įrašėte knygą";
-            Book::create();
+            $book = new Book( 0, $_POST['title'], $_POST['genre'], $_POST['authorId']);
+            $book->create();
         }
     }
 
     public static function update()
     {
-        $book = new Book($_POST['id'], $_POST['title'], $_POST['genre'], $_POST['author_id']);
+        $book = new Book($_POST['id'], $_POST['title'], $_POST['genre'], $_POST['authorId']);
         $book->update();
     }
 

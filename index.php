@@ -34,9 +34,6 @@
 
 
             ?>
-            <!-- <div class="alert alert-danger" role="alert">
-                This is a danger alert—check it out!
-            </div> -->
             <?php include "./views/components/form.php" ?>
             <?php include "./views/components/sortFilter.php" ?>
             <?php include "./views/components/table.php" ?>
